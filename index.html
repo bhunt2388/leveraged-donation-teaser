@@ -260,7 +260,60 @@
     .vs-bar, .vol-tiers { flex-direction: column; }
     .vol-tier-div { width: 100%; height: 1px; }
   }
-/* ═══ ANIMATIONS ═══ */
+/* ═══ NEW SECTIONS ═══ */
+.asset-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:32px;}
+.asset-card{background:var(--navy2);border:1px solid var(--border);border-radius:var(--radius);padding:26px 24px;}
+.asset-card.accent{border-color:var(--gold);border-top:2px solid var(--gold);}
+.asset-tag{font-size:9.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;font-family:var(--mono,monospace);}
+.asset-head{font-size:16px;font-weight:700;color:var(--white);line-height:1.35;margin-bottom:10px;}
+.asset-body{font-size:13px;line-height:1.65;color:var(--muted);}
+.asset-body strong{color:var(--cream);}
+
+.stout-box{background:var(--navy2);border:1px solid var(--border2);border-left:3px solid var(--gold);border-radius:var(--radius);padding:28px 32px;margin-bottom:28px;display:grid;grid-template-columns:1fr auto;gap:32px;align-items:center;}
+.stout-label{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+.stout-firm{font-size:15px;font-weight:700;color:var(--white);margin-bottom:6px;}
+.stout-detail{font-size:13px;color:var(--muted);line-height:1.6;}
+.stout-val{text-align:center;}
+.stout-num{font-size:36px;font-weight:700;color:var(--gold);font-family:var(--mono,monospace);line-height:1;}
+.stout-num-label{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-top:6px;}
+
+.product-row{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:16px;}
+.product-pill{background:var(--steel);border-radius:var(--radius);padding:16px 20px;display:flex;align-items:center;gap:14px;}
+.product-pill-icon{font-size:22px;}
+.product-name{font-size:14px;font-weight:700;color:var(--white);}
+.product-sub{font-size:11.5px;color:var(--muted);}
+
+.charity-banner{background:linear-gradient(135deg,rgba(34,197,94,0.10) 0%,rgba(34,197,94,0.04) 100%);border:1px solid rgba(34,197,94,0.22);border-radius:var(--radius);padding:28px 32px;margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:32px;}
+.charity-title{font-size:15px;font-weight:700;color:var(--green);margin-bottom:6px;}
+.charity-body{font-size:13px;color:var(--muted);line-height:1.65;}
+.charity-body strong{color:var(--cream);}
+.charity-bullets{list-style:none;display:flex;flex-direction:column;gap:6px;}
+.charity-bullets li{font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;}
+.charity-bullets li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0;}
+
+.doc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:24px;}
+.doc-card{background:var(--navy2);border:1px solid var(--border2);border-radius:var(--radius);padding:24px 22px;}
+.doc-card.gold-border{border-color:var(--gold);}
+.doc-num{font-family:var(--mono,monospace);font-size:10px;letter-spacing:0.15em;color:var(--gold);margin-bottom:10px;}
+.doc-head{font-size:15px;font-weight:700;color:var(--white);margin-bottom:8px;}
+.doc-body{font-size:13px;line-height:1.65;color:var(--muted);}
+.doc-body strong{color:var(--cream);}
+.doc-highlight{background:rgba(201,169,97,0.12);border:1px solid rgba(201,169,97,0.28);border-radius:4px;padding:12px 16px;margin-top:10px;font-family:var(--mono,monospace);font-size:12px;color:var(--gold);}
+
+.k1-example{background:var(--steel);border-radius:var(--radius);padding:20px 24px;margin-top:20px;}
+.k1-label{font-size:9.5px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+.k1-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border2);font-size:13px;color:var(--muted);}
+.k1-row:last-child{border-bottom:none;padding-top:12px;}
+.k1-row.highlight{color:var(--white);font-weight:600;background:rgba(201,169,97,0.10);margin:0 -8px;padding:8px 8px;border-radius:3px;border:none;}
+.k1-val{font-family:var(--mono,monospace);font-size:13px;color:var(--green);}
+.k1-val.gold{color:var(--gold);}
+
+@media(max-width:900px){
+  .asset-grid,.product-row,.charity-banner,.doc-grid{grid-template-columns:1fr;}
+  .stout-box{grid-template-columns:1fr;}
+}
+
+
 #anim-progress{position:fixed;top:0;left:0;height:3px;background:var(--gold);width:0%;z-index:9999;transition:width 0.1s linear;border-radius:0 2px 2px 0;pointer-events:none;}
 
 .anim-fade{opacity:0;transform:translateY(22px);transition:opacity 0.65s cubic-bezier(0.22,1,0.36,1),transform 0.65s cubic-bezier(0.22,1,0.36,1);}
@@ -313,6 +366,8 @@
   <div class="dot" title="Tax Savings"></div>
   <div class="dot" title="Income Tiers"></div>
   <div class="dot" title="Calculator"></div>
+  <div class="dot" title="The Asset"></div>
+  <div class="dot" title="Documentation"></div>
   <div class="dot" title="Compliance"></div>
   <div class="dot" title="Process"></div>
   <div class="dot" title="Compensation"></div>
@@ -596,8 +651,105 @@
   </div>
 </section>
 
-<!-- ════════ SLIDE 5: COMPLIANCE ════════ -->
+<!-- ════════ SLIDE 5: THE ASSET IS REAL ════════ -->
 <section class="slide" id="s5">
+  <div class="sec-label">The Underlying Asset</div>
+  <h2 class="sec-title">The Asset Is Real &mdash; and Commercially Active</h2>
+  <p class="sec-body">Unlike conservation easements, this deduction is backed by a tangible commodity with an active commercial market. The donated minerals are volcanic soil amendments with real buyers, real products, and an independent third-party appraisal by a nationally recognized firm.</p>
+
+  <div class="stout-box">
+    <div>
+      <div class="stout-label">Independent Third-Party Appraisal</div>
+      <div class="stout-firm">STOUT RISK, LLC &mdash; Qualified Appraisal</div>
+      <div class="stout-detail">Stout Risk, LLC (Dallas, TX) conducted a full Discounted Cash Flow appraisal of the Stanislaus Island volcanic mineral reserves using 5, 10, and 15-year DCF models, weighted at 25% / 50% / 25%. The concluded Fair Market Value drives the Form 8283 deduction amount. Signed by a Managing Director with CMA credentials. Stout is one of the largest independent valuation firms in the United States.</div>
+    </div>
+    <div class="stout-val">
+      <div class="stout-num">$196.4M</div>
+      <div class="stout-num-label">Concluded FMV<br>300,000 Tons</div>
+    </div>
+  </div>
+
+  <div class="asset-grid">
+    <div class="asset-card accent">
+      <div class="asset-tag">The Mineral</div>
+      <div class="asset-head">Volcanic Soil Amendment from Stanislaus Island</div>
+      <div class="asset-body">300,000 tons of volcanic ash mineral with documented commercial applications in agriculture. Long-term holding period is inherited by the taxpayer-partner via IRC tacking rules on day one &mdash; completing the long-term capital asset requirement before donation.</div>
+    </div>
+    <div class="asset-card">
+      <div class="asset-tag">Commercial Products — GEOSERUM&trade;</div>
+      <div class="asset-head">Real Products in an Active Market</div>
+      <div class="asset-body">The same mineral powers commercial agricultural products currently on the market. <strong>GEO:Foliar</strong> (liquid concentrate, spray application) and <strong>GEO:Solve</strong> both use the Stanislaus volcanic mineral. A game-changing soil amendment protocol producing <strong>30% more protein</strong> in alfalfa and requiring <strong>40% less water</strong>.</div>
+      <div class="product-row">
+        <div class="product-pill"><div class="product-pill-icon">🌿</div><div><div class="product-name">GEO:Foliar</div><div class="product-sub">Liquid Concentrate · Spray</div></div></div>
+        <div class="product-pill"><div class="product-pill-icon">🧪</div><div><div class="product-name">GEO:Solve</div><div class="product-sub">Spray Application</div></div></div>
+      </div>
+    </div>
+    <div class="asset-card">
+      <div class="asset-tag">Consumer Market Proof — Lytra</div>
+      <div class="asset-head">84+ Trace Minerals. Already on Store Shelves.</div>
+      <div class="asset-body">Lytra, a food-grade trace mineral ingredient from the Great Salt Lake (84+ minerals including magnesium, gold, silver), is <strong>contracted into Life Cider</strong> &mdash; a sparkling apple cider vinegar beverage now available at retail. This demonstrates an active, real consumer market for mineral-based products identical in class to the donated asset.</div>
+    </div>
+  </div>
+
+  <div class="charity-banner">
+    <div>
+      <div class="charity-title">Selected Charity 2025 &mdash; Native American Tribal Chapters</div>
+      <div class="charity-body">The soil amendment minerals are donated to <strong>multiple chapters within Native American Tribes</strong>, where they enhance the nutritional content and yield of tribal crops &mdash; measurable, mission-aligned charitable impact with no circular flow of funds back to the program.</div>
+    </div>
+    <div>
+      <ul class="charity-bullets">
+        <li>Minerals donated to multiple tribal chapters</li>
+        <li>Enhances nutritional content and crop yield</li>
+        <li>Empowers tribal harvesters toward self-sufficiency</li>
+        <li>Charity: Followers of Christ, Inc. (EIN 45-5116849)</li>
+        <li>Donee acknowledgment signed by Henoc Ulisse, President</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ SLIDE 6: DOCUMENTATION ════════ -->
+<section class="slide" id="s6">
+  <div class="sec-label">The Tax Documentation Package</div>
+  <h2 class="sec-title">Every Document the IRS Expects &mdash; Delivered</h2>
+  <p class="sec-body">Each investor receives a complete documentation package prepared to IRS standards. The structure is designed so the client&rsquo;s CPA has everything needed to file confidently &mdash; no gaps, no missing signatures, no ambiguity.</p>
+
+  <div class="doc-grid">
+    <div class="doc-card gold-border">
+      <div class="doc-num">DOC 01 &mdash; APPRAISAL</div>
+      <div class="doc-head">Stout Risk LLC Qualified Appraisal</div>
+      <div class="doc-body">A full Discounted Cash Flow appraisal of the donated mineral property, conducted by Stout Risk LLC (Dallas, TX). Three DCF periods (5, 10, 15-year), weighted average methodology, concluded FMV of <strong>$196,400,000</strong> for 300,000 tons. Signed by a CMA-credentialed Managing Director. Meets all IRS requirements for a &ldquo;qualified appraisal&rdquo; under IRC &sect;170(f)(11).</div>
+      <div class="doc-highlight">Accepted DCF methods: 5yr ($247M) · 10yr ($192M) · 15yr ($193M) → Concluded: $196.4M</div>
+    </div>
+    <div class="doc-card gold-border">
+      <div class="doc-num">DOC 02 &mdash; FORM 8283</div>
+      <div class="doc-head">Noncash Charitable Contribution Form 8283</div>
+      <div class="doc-body">IRS Form 8283 (Rev. November 2022) completed with all required fields: description of donated property (&ldquo;Soil Amendment Minerals&rdquo;), date of contribution, FMV, donor&rsquo;s cost basis, and appraised value. Contains both the <strong>qualified appraiser signature</strong> (Part IV) and the <strong>donee acknowledgment signature</strong> (Part V) from Followers of Christ, Inc. &mdash; both legally required.</div>
+      <div class="doc-highlight">Description: Raw Soil Amendment Minerals · FMV: $196,400,000 · Date: 12/31/2022</div>
+    </div>
+    <div class="doc-card">
+      <div class="doc-num">DOC 03 &mdash; SCHEDULE K-1</div>
+      <div class="doc-head">Partnership K-1 &mdash; Line 13 Code E Reporting</div>
+      <div class="doc-body">Each partner receives a Schedule K-1 (Form 1065) reporting the charitable contribution under <strong>Line 13, Code E</strong> &mdash; the specific code for capital gain donations to charity that are exempt from tax. Boxes 8 and 9 (which would trigger taxable capital gain) are intentionally left blank. Section L reflects the charitable deduction reducing partner basis, with a positive ending capital account confirmed.</div>
+      <div class="k1-example">
+        <div class="k1-label">K-1 (Form 1065) &mdash; Example at $50,000 Investment</div>
+        <div class="k1-row"><span>Line 13 Code E — Capital Gain Donation (tax-exempt)</span><span class="k1-val gold">$250,000</span></div>
+        <div class="k1-row"><span>Box 8 — Net LTCG (taxable)</span><span class="k1-val">$0</span></div>
+        <div class="k1-row"><span>Box 9 — Royalties (taxable)</span><span class="k1-val">$0</span></div>
+        <div class="k1-row highlight"><span>Section L — Ending Capital Account</span><span class="k1-val">Positive ✓</span></div>
+      </div>
+    </div>
+    <div class="doc-card">
+      <div class="doc-num">DOC 04 &mdash; PARTNERSHIP AGREEMENT</div>
+      <div class="doc-head">Series LLC Partnership Documents &amp; LOI</div>
+      <div class="doc-body">Client executes a Letter of Intent via DocuSign, then a full partnership agreement forming the Series LLC. The taxpayer is admitted as a limited partner with documented capital account basis. The partnership structure ensures IRC tacking applies &mdash; the long-term holding period on the minerals is inherited on day one. No wet signatures required. Attorney-managed process throughout.</div>
+      <div class="doc-highlight">Steps 2-4: DocuSign LOI → Wire to Attorney Escrow → DocuSign Partnership Docs</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ SLIDE 7: WHY THIS STANDS UP ════════ -->
+<section class="slide" id="s7">
   <div class="sec-label">Risk &amp; Compliance</div>
   <h2 class="sec-title">Why This Stands Up</h2>
   <p class="sec-body">The strategy is specifically designed to avoid the pitfalls that plagued listed transactions like conservation easements. Four structural differences protect clients.</p>
@@ -650,7 +802,7 @@
 </section>
 
 <!-- ════════ SLIDE 6: PROCESS ════════ -->
-<section class="slide" id="s6">
+<section class="slide" id="s8">
   <div class="sec-label">For Advisors</div>
   <h2 class="sec-title">Step-by-Step Process</h2>
   <p class="sec-body">Designed to be turnkey for CPAs and financial planners. Your only job is the referral &mdash; we handle all documentation, escrow, entity setup, and tax forms.</p>
@@ -684,7 +836,7 @@
 </section>
 
 <!-- ════════ SLIDE 7: COMPENSATION ════════ -->
-<section class="slide" id="s_comp">
+<section class="slide" id="s9">
   <div class="sec-label">Referral Compensation</div>
   <h2 class="sec-title">There Is Room to Be Paid for Referrals</h2>
   <p class="sec-body comp-intro">How you&rsquo;re compensated depends on your professional designation. Both tracks are clean &mdash; structure is different, not the outcome. Fees are based on total charitable deductions you generate across all clients.</p>
@@ -762,8 +914,8 @@
   </div>
 </section>
 
-<!-- ════════ SLIDE 8: CTA ════════ -->
-<section class="slide" id="s7">
+<!-- ════════ SLIDE 10: CTA ════════ -->
+<section class="slide" id="s10">
   <div style="position:relative;z-index:1;text-align:center;width:100%">
     <div class="cover-eyebrow">Ready to Learn More?</div>
     <h2 class="sec-title" style="color:var(--white);text-align:center">Start Referring Clients Today</h2>
@@ -943,6 +1095,9 @@
   staggerIn('.comp-grid',   '.comp-card', 'in', 100);
   staggerIn('.steps',       '.step',      'in', 120);
   staggerIn('.track-grid',  '.track-card','in', 90);
+  staggerIn('.asset-grid',  '.asset-card','in', 100);
+  staggerIn('.doc-grid',    '.doc-card',  'in', 110);
+  staggerIn('.product-row', '.product-pill','in', 80);
 
   // Savings table rows — replay every pass
   const savObs = new IntersectionObserver((entries) => {
@@ -973,8 +1128,8 @@
   }, {threshold:0.15});
   document.querySelectorAll('.ratio-box, .leverage-grid').forEach(el => ratioObs.observe(el));
 
-  // Section titles fade-up — replay every pass
-  document.querySelectorAll('.sec-title, .sec-label, .sec-body').forEach(el => el.classList.add('anim-fade'));
+  // Section titles fade-up
+  document.querySelectorAll('.sec-title, .sec-label, .sec-body, .stout-box, .charity-banner, .k1-example').forEach(el => el.classList.add('anim-fade'));
   const fadeObs = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if(e.isIntersecting) e.target.classList.add('in');
