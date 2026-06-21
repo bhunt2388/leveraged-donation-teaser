@@ -924,15 +924,16 @@
     });
   }, 400);
 
-  // Generic stagger observer
+  // Generic stagger observer — bidirectional (resets on exit, replays on enter)
   function staggerIn(containerSel, childSel, cls, gap){
     const obs = new IntersectionObserver((entries) => {
       entries.forEach(e => {
-        if(!e.isIntersecting) return;
-        obs.unobserve(e.target);
-        e.target.querySelectorAll(childSel).forEach((el,i) => {
-          setTimeout(() => el.classList.add(cls), i*gap);
-        });
+        const children = e.target.querySelectorAll(childSel);
+        if(e.isIntersecting){
+          children.forEach((el,i) => setTimeout(() => el.classList.add(cls), i*gap));
+        } else {
+          children.forEach(el => el.classList.remove(cls));
+        }
       });
     }, {threshold:0.12});
     document.querySelectorAll(containerSel).forEach(el => obs.observe(el));
@@ -943,38 +944,41 @@
   staggerIn('.steps',       '.step',      'in', 120);
   staggerIn('.track-grid',  '.track-card','in', 90);
 
-  // Savings table rows
+  // Savings table rows — replay every pass
   const savObs = new IntersectionObserver((entries) => {
     entries.forEach(e => {
-      if(!e.isIntersecting) return;
-      savObs.unobserve(e.target);
-      e.target.querySelectorAll('tbody tr').forEach((tr,i) => {
-        setTimeout(() => tr.classList.add('row-in'), i*70);
-      });
+      const rows = e.target.querySelectorAll('tbody tr');
+      if(e.isIntersecting){
+        rows.forEach((tr,i) => setTimeout(() => tr.classList.add('row-in'), i*70));
+      } else {
+        rows.forEach(tr => tr.classList.remove('row-in'));
+      }
     });
   }, {threshold:0.10});
   document.querySelectorAll('.savings-table, .income-table').forEach(t => savObs.observe(t));
 
-  // Ratio rows
+  // Ratio rows — replay every pass
   const ratioObs = new IntersectionObserver((entries) => {
     entries.forEach(e => {
-      if(!e.isIntersecting) return;
-      ratioObs.unobserve(e.target);
-      e.target.querySelectorAll('.ratio-row').forEach((r,i) => {
-        setTimeout(() => r.classList.add('in'), i*100);
-      });
-      e.target.querySelectorAll('.gain-lbl').forEach((r,i) => {
-        setTimeout(() => r.classList.add('in'), 300+i*80);
-      });
+      const ratioRows = e.target.querySelectorAll('.ratio-row');
+      const gainLbls  = e.target.querySelectorAll('.gain-lbl');
+      if(e.isIntersecting){
+        ratioRows.forEach((r,i) => setTimeout(() => r.classList.add('in'), i*100));
+        gainLbls.forEach((r,i)  => setTimeout(() => r.classList.add('in'), 300+i*80));
+      } else {
+        ratioRows.forEach(r => r.classList.remove('in'));
+        gainLbls.forEach(r  => r.classList.remove('in'));
+      }
     });
   }, {threshold:0.15});
   document.querySelectorAll('.ratio-box, .leverage-grid').forEach(el => ratioObs.observe(el));
 
-  // Section titles fade-up
+  // Section titles fade-up — replay every pass
   document.querySelectorAll('.sec-title, .sec-label, .sec-body').forEach(el => el.classList.add('anim-fade'));
   const fadeObs = new IntersectionObserver((entries) => {
     entries.forEach(e => {
-      if(e.isIntersecting){ e.target.classList.add('in'); fadeObs.unobserve(e.target); }
+      if(e.isIntersecting) e.target.classList.add('in');
+      else e.target.classList.remove('in');
     });
   }, {threshold:0.15});
   document.querySelectorAll('.anim-fade').forEach(el => fadeObs.observe(el));
