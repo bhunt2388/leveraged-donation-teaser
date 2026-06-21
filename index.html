@@ -260,9 +260,50 @@
     .vs-bar, .vol-tiers { flex-direction: column; }
     .vol-tier-div { width: 100%; height: 1px; }
   }
+/* ═══ ANIMATIONS ═══ */
+#anim-progress{position:fixed;top:0;left:0;height:3px;background:var(--gold);width:0%;z-index:9999;transition:width 0.1s linear;border-radius:0 2px 2px 0;pointer-events:none;}
+
+.anim-fade{opacity:0;transform:translateY(22px);transition:opacity 0.65s cubic-bezier(0.22,1,0.36,1),transform 0.65s cubic-bezier(0.22,1,0.36,1);}
+.anim-fade.in{opacity:1;transform:none;}
+
+.hero-stat .val{transition:color 0.6s ease;}
+.hero-stat .val.shimmer{animation:val-pop 0.9s ease forwards;}
+@keyframes val-pop{0%{color:var(--gold2);}100%{color:var(--white);}}
+
+.how-card,.comp-card{opacity:0;transform:translateY(18px);transition:opacity 0.5s ease,transform 0.5s ease;}
+.how-card.in,.comp-card.in{opacity:1;transform:none;}
+
+.step{opacity:0;transform:scale(0.88);transition:opacity 0.45s ease,transform 0.45s ease;}
+.step.in{opacity:1;transform:scale(1);}
+
+.savings-table tbody tr{opacity:0;transform:translateX(-12px);transition:opacity 0.38s ease,transform 0.38s ease;}
+.savings-table tbody tr.row-in{opacity:1;transform:none;}
+
+.income-table tbody tr{opacity:0;transition:opacity 0.35s ease;}
+.income-table tbody tr.row-in{opacity:1;}
+
+.track-card{opacity:0;transform:translateY(14px);transition:opacity 0.5s ease,transform 0.5s ease;}
+.track-card.in{opacity:1;transform:none;}
+
+.ratio-row{opacity:0;transform:translateX(-16px);transition:opacity 0.45s ease,transform 0.45s ease;}
+.ratio-row.in{opacity:1;transform:none;}
+
+.gain-lbl{opacity:0;transition:opacity 0.5s ease;}
+.gain-lbl.in{opacity:1;}
+
+/* pulse the golden ratio box */
+@keyframes gold-pulse{0%,100%{box-shadow:0 0 0 0 rgba(201,169,97,0);}50%{box-shadow:0 0 0 8px rgba(201,169,97,0.15);}}
+.ratio-box{animation:gold-pulse 3s ease-in-out infinite;}
+
+/* CTA button shimmer */
+@keyframes btn-shimmer{0%{background-position:200% center;}100%{background-position:-200% center;}}
+.cta-btn,.btn-primary{background-size:200% auto;transition:background-position 0.4s ease!important;}
+.cta-btn:hover,.btn-primary:hover{animation:btn-shimmer 1.2s linear;}
+
 </style>
 </head>
 <body>
+<div id="anim-progress"></div>
 
 <!-- NAV DOTS -->
 <nav class="nav-dots" id="nav-dots">
@@ -284,13 +325,13 @@
   <h1 class="cover-title">Leveraged <em>Donation</em><br>Tax Strategy</h1>
   <p class="cover-sub">A federally compliant charitable deduction program giving high-income taxpayers up to a 5:1 return on every dollar contributed &mdash; verified appraisal, K-1 documentation, and zero listed-transaction risk.</p>
   <div class="hero-stats">
-    <div class="hero-stat"><div class="val">5&times;</div><div class="lbl">Deduction Ratio</div></div>
+    <div class="hero-stat"><div class="val" data-count="5" data-suffix="×">5×</div><div class="lbl">Deduction Ratio</div></div>
     <div class="hero-divider"></div>
-    <div class="hero-stat"><div class="val">$91K</div><div class="lbl">Cash Benefit / $1M Income</div></div>
+    <div class="hero-stat"><div class="val" data-count="91" data-prefix="$" data-suffix="K">$91K</div><div class="lbl">Cash Benefit / $1M Income</div></div>
     <div class="hero-divider"></div>
-    <div class="hero-stat"><div class="val">$50K</div><div class="lbl">Minimum Investment</div></div>
+    <div class="hero-stat"><div class="val" data-count="50" data-prefix="$" data-suffix="K">$50K</div><div class="lbl">Minimum Investment</div></div>
     <div class="hero-divider"></div>
-    <div class="hero-stat"><div class="val">30%</div><div class="lbl">AGI Deduction Limit</div></div>
+    <div class="hero-stat"><div class="val" data-count="30" data-suffix="%">30%</div><div class="lbl">AGI Deduction Limit</div></div>
   </div>
   <div class="pills">
     <span class="pill pill-gold">Not a Listed Transaction</span>
@@ -841,6 +882,110 @@
   // Init calculator on load
   calcClient();
   calcAdvisor();
+
+  /* ═══ ANIMATION ENGINE ═══ */
+
+  // Scroll progress bar
+  const progBar = document.getElementById('anim-progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    progBar.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
+  }, {passive:true});
+
+  // Easing
+  function easeOutExpo(t){ return t===1 ? 1 : 1-Math.pow(2,-10*t); }
+
+  // Count-up for hero stats
+  function countUp(el){
+    const target = parseFloat(el.dataset.count);
+    const prefix = el.dataset.prefix || '';
+    const suffix = el.dataset.suffix || '';
+    const decimals = parseInt(el.dataset.decimals||'0');
+    const duration = 1400;
+    const start = Date.now();
+    el.style.opacity = '1';
+    function tick(){
+      const p = Math.min((Date.now()-start)/duration, 1);
+      const v = target * easeOutExpo(p);
+      el.textContent = prefix + v.toFixed(decimals) + suffix;
+      if(p < 1) requestAnimationFrame(tick);
+      else {
+        el.textContent = prefix + target.toFixed(decimals) + suffix;
+        el.classList.add('shimmer');
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+
+  // Fire count-up on hero stats after short delay (they're always in view)
+  setTimeout(() => {
+    document.querySelectorAll('.hero-stat .val[data-count]').forEach((el, i) => {
+      setTimeout(() => countUp(el), i * 200);
+    });
+  }, 400);
+
+  // Generic stagger observer
+  function staggerIn(containerSel, childSel, cls, gap){
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if(!e.isIntersecting) return;
+        obs.unobserve(e.target);
+        e.target.querySelectorAll(childSel).forEach((el,i) => {
+          setTimeout(() => el.classList.add(cls), i*gap);
+        });
+      });
+    }, {threshold:0.12});
+    document.querySelectorAll(containerSel).forEach(el => obs.observe(el));
+  }
+
+  staggerIn('.three-col',   '.how-card',  'in', 110);
+  staggerIn('.comp-grid',   '.comp-card', 'in', 100);
+  staggerIn('.steps',       '.step',      'in', 120);
+  staggerIn('.track-grid',  '.track-card','in', 90);
+
+  // Savings table rows
+  const savObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(!e.isIntersecting) return;
+      savObs.unobserve(e.target);
+      e.target.querySelectorAll('tbody tr').forEach((tr,i) => {
+        setTimeout(() => tr.classList.add('row-in'), i*70);
+      });
+    });
+  }, {threshold:0.10});
+  document.querySelectorAll('.savings-table, .income-table').forEach(t => savObs.observe(t));
+
+  // Ratio rows
+  const ratioObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(!e.isIntersecting) return;
+      ratioObs.unobserve(e.target);
+      e.target.querySelectorAll('.ratio-row').forEach((r,i) => {
+        setTimeout(() => r.classList.add('in'), i*100);
+      });
+      e.target.querySelectorAll('.gain-lbl').forEach((r,i) => {
+        setTimeout(() => r.classList.add('in'), 300+i*80);
+      });
+    });
+  }, {threshold:0.15});
+  document.querySelectorAll('.ratio-box, .leverage-grid').forEach(el => ratioObs.observe(el));
+
+  // Section titles fade-up
+  document.querySelectorAll('.sec-title, .sec-label, .sec-body').forEach(el => el.classList.add('anim-fade'));
+  const fadeObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){ e.target.classList.add('in'); fadeObs.unobserve(e.target); }
+    });
+  }, {threshold:0.15});
+  document.querySelectorAll('.anim-fade').forEach(el => fadeObs.observe(el));
+
+  // Header shadow lift on scroll
+  const nav = document.querySelector('.nav-dots');
+  if(nav){
+    window.addEventListener('scroll', () => {
+      nav.style.boxShadow = window.scrollY > 60 ? '2px 0 16px rgba(0,0,0,0.25)' : '';
+    }, {passive:true});
+  }
 </script>
 </body>
 </html>
